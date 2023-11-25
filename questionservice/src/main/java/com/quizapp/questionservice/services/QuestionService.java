@@ -1,4 +1,4 @@
-package com.practice.quiz.services;
+package com.quizapp.questionservice.services;
 
 import java.util.List;
 
@@ -7,12 +7,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.practice.quiz.repository.QuestionRepository;
-import com.practice.quiz.entity.QuestionEntity;
+import com.quizapp.questionservice.entity.QuestionEntity;
+import com.quizapp.questionservice.model.QuestionWrapper;
+import com.quizapp.questionservice.model.ResponseModel;
+import com.quizapp.questionservice.repository.QuestionRepository;
+
+
 
 @Service
 public class QuestionService {
-         //@Autowired(required = true) ---->  field injection
        private final QuestionRepository questionRepository;
    
     @Autowired(required = true) // constructor injection
@@ -36,7 +39,33 @@ public class QuestionService {
         return "Success";
     }
 
+    public ResponseEntity<List<Integer>> generateQuestionsForQuiz(String categoryName, Integer num){
 
+        List<Integer> questionIds = questionRepository.findRandomQuestionByCategory(categoryName, num);
 
-    
+        return new ResponseEntity<>(questionIds, HttpStatus.OK);
+
+    }
+
+    public ResponseEntity<List<QuestionWrapper>> fetchQuestions(List<Long> questionIds){
+
+        List<QuestionWrapper> wrapper = this.questionRepository.findQuestionsByIds(questionIds);
+
+        return new ResponseEntity<>(wrapper, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Integer> calculateScore(List<ResponseModel> responses){
+
+        int right = 0;
+        for(ResponseModel r: responses){
+            
+          QuestionEntity question = this.questionRepository.findById(r.getId()).get(); 
+      
+          if(r.getAnswer().equals(question.getRightAnswer()))
+            right++;
+          
+        }
+
+        return new ResponseEntity<>(right, HttpStatus.OK);
+    }
 }

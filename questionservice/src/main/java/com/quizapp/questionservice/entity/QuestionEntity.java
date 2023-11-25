@@ -1,4 +1,4 @@
-package com.practice.quiz.entity;
+package com.quizapp.questionservice.entity;
 
 import java.sql.Date;
 

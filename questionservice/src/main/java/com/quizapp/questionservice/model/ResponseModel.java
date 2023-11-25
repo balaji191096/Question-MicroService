@@ -1,4 +1,4 @@
-package com.practice.quiz.model;
+package com.quizapp.questionservice.model;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ResponseModel {
 
-    private Long questionId;
+    private Long id;
     private String answer;
     
 }
