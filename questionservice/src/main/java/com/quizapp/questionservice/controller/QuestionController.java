@@ -48,7 +48,7 @@ public class QuestionController {
 // get questions by question Id
 //  calculate result
     @PostMapping("generate")
-    public ResponseEntity<List<Integer>> generateQuestionForQuiz(@RequestParam String categoryName, @RequestParam Integer num){
+    public ResponseEntity<List<Long>> generateQuestionForQuiz(@RequestParam String categoryName, @RequestParam Integer num){
         return this.questionService.generateQuestionsForQuiz(categoryName, num);
     }
 

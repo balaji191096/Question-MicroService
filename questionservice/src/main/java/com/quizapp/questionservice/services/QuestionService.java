@@ -39,9 +39,9 @@ public class QuestionService {
         return "Success";
     }
 
-    public ResponseEntity<List<Integer>> generateQuestionsForQuiz(String categoryName, Integer num){
+    public ResponseEntity<List<Long>> generateQuestionsForQuiz(String categoryName, Integer num){
 
-        List<Integer> questionIds = questionRepository.findRandomQuestionByCategory(categoryName, num);
+        List<Long> questionIds = questionRepository.findRandomQuestionByCategory(categoryName, num);
 
         return new ResponseEntity<>(questionIds, HttpStatus.OK);
 
@@ -60,10 +60,8 @@ public class QuestionService {
         for(ResponseModel r: responses){
             
           QuestionEntity question = this.questionRepository.findById(r.getId()).get(); 
-      
           if(r.getAnswer().equals(question.getRightAnswer()))
-            right++;
-          
+            right++;  
         }
 
         return new ResponseEntity<>(right, HttpStatus.OK);
